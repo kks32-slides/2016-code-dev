@@ -221,12 +221,43 @@
 <!-- ************************* Slide ************************************-->
 <slide>
   <hgroup>
-    <h2>LBM-DEM GPU implementation</h2>
+    <h2>LBM-DEM implementation</h2>
+  </hgroup>
+  <article id="MRT" class="smaller">
+    <div style="float: left; width: 45%;">
+      <ul>
+        <li>C-99 code</li>
+        <li>C++03 version</li>
+        <li>OpenACC GPU version 2.0</li>
+        <li>Visualisation VTK</li>
+        <li>2D LBM-DEM Code</li>
+        <ul>
+          <li>D2Q9 model for fluid</li>
+          <li>Pressure and velocity boundaries</li>
+          <li>Periodic boundary condition</li>
+          <li>Multi-Relaxation Time for numerical stability</li>
+          <li>Turbulence</li>
+          <li>2D discs</li>
+        </ul>
+	<li>Voronoi Tesselation in 2D/3d</li>
+	<li>Cumulative $\beta$ distribution</li>
+      </ul>
+    </div>
+    <div style="float: right; width: 55%;">
+      <img src="images/GPU_Concept.png" width ="100%">
+    </div>
+</article>
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>LBM-DEM Multi-GPU implementation</h2>
   </hgroup>
   <br/>  
   <article class="smaller" style="text-align:center;">
     <figure>
-      <img src="images/GPU_Concept.png" width ="70%">
+      <img src="images/multi-gpu.png" width ="90%">
     </figure>
   </article>
 </slide>
@@ -281,70 +312,30 @@
 
 <!-- ************************* Slide ************************************-->
 <slide>
-      <hgroup>
-      <h2> Particle generation: cummulative $\beta$ distribution </h2>
-      </hgroup>
-	<article class="smaller">
-	<div class="left" style="width:55%;">
-	  <div class="block"  style="clear: both; width: 100%">
-	    $\beta(x,a,b)=\frac{1}{B(a,b)} \int\limits_{0}^{x}t^{a-1}(1-t)^{b-1}dt$
-	  </div><br />
-	  <figure>
-	  <img src="images/psd.png" width = "90%">
-	  <figcaption style = "font-size: 60%; text-align: center;">
-	    Particle Size Distribution
-	  </figcaption>
-	  </figure>
-	</div>
-	<div class="right" style="width:45%;">
-	  <figure>
-	  <img src="images/a4b4r18.png" width = "65%">
-	  <figcaption style = "font-size: 60%; text-align: center;">
-	    <br /> <br />Well graded (a = 4; b = 4; r= 2)
-	  </figcaption>
-	  </figure>
-	</div>
-	</article>
-</slide>
-
-
-<!-- ************************* Slide ************************************-->
-<slide>
   <hgroup>
-    <h2>Mirco to Macro: Voronoi Tesselation</h2>
+    <h2>LBM DEM current developments / future plans</h2>
   </hgroup>
-  <div class="video">
-    <br />
-    <video  width="90%" controls loop>
-      <source src="videos/Voronoi_Tesselation.webm" type="video/webm">
-  	Your browser does not support the video tag.
-    </video>
-  </div>
+  <article id="MRT" class="smaller">
+      <ul>
+        <li>Generic templatised C++11/14 code</li>
+	<li>Live rendering of VTK using GPUs (inprogress)</li>
+  	<li>Multi-GPU support across nodes</li>
+	<li>LBM:</li>
+	<ul>
+          <li>3D LBM model</li>
+          <li>3D LB - DEM coupling</li>
+	</ul>
+	<li>DEM:</li>
+	<ul>
+          <li>3D DEM Code support for different shapes - Done (University of Grenoble)</li>
+	  <li>DEM simulations on GPU</li>
+	  <li>Contact models for DEM</li>
+	  <li>Special boundaries for DEM</li>
+	</ul>
+     </ul>
+    </div>
+</article>
 </slide>
-
-<!-- ************************* Slide ************************************-->
-<slide>
-	<hgroup>
-		<h2>Voronoi Tesselation: Capturing macroscopic density</h2>
-	</hgroup>
-	<article class="smaller">
-	<div class="figure">
-	  <figure>
-  	    <img src="images/Tesselation.png" width="95%"><br />
-	    <figcaption  style = "font-size: 80%; text-align: center;">
-	      Voronoi tesselation of run-out
-	    </figcaption>
-	  </figure>
-	  <figure>
-  	    <img src="images/density.png" width="95%"><br />
-	    <figcaption  style = "font-size: 80%; text-align: center;">
-	      Local packing density (black: dense, white: loose)
-	    </figcaption>
-	  </figure>
-	</div>
-	</article>
-</slide>
-
 
 <!-- ************************* Slide ************************************-->
 <slide>
@@ -401,19 +392,139 @@
 </slide>
 
 <!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>FEM / MPM implementation</h2>
+  </hgroup>
+  <article id="MRT" class="smaller">
+    <div style="float: left; width: 45%;">
+      <ul>
+        <li>Generic templatised C++11/14 code</li>
+        <li>2D/3D MPM Code</li>
+	<li>Generalise Interpolation Material Point</li>
+        <li>Shared memory / thread parallelisation</li>
+        <li>BLAS matrix algebra</li>
+        <li>Visualisation VTK</li>
+        <li>Material models:</li>
+	<ul>
+          <li>Linear elastic</li>
+          <li>Mohr coulomb</li>
+          <li>Bingham fluid</li>
+          <li>Cam Clay</li>
+          <li>NorSand</li>
+        </ul>
+	<li>Elements: Quadrilateral and Hexahedron</li>
+      </ul>
+    </div>
+    <div style="float: right; width: 55%;">
+      <img src="images/MPMsteps.png" width ="100%">
+    </div>
+</article>
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>C++ Factory implementation</h2>
+  </hgroup>
+  <br/>  
+    <pre>
+    <code class="cpp">
+	class MyElementFactory { // The factory - implements singleton pattern!
+	 public:
+	  static MyElementFactory* Instance(); 	  // Get the single instance of the factory
+	  void RegisterFactoryFunction(
+	      std::string name, std::function<Element*(void)> classFactoryFunction);
+	  // create an instance of a registered class
+	  std::shared_ptr<Element> Create(std::string name);
+	};
+	template <class T> // A helper class to register a factory function
+	class Registrar {
+	 public:
+	  Registrar(std::string className) {
+	    MyElementFactory::Instance()->RegisterFactoryFunction(
+		className, [](void) -> Element * { return new T(); });
+	  }
+	};
+    </code></pre>  
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>C++ Factory implementation</h2>
+  </hgroup>
+  <br/>  
+    <pre>
+    <code class="cpp">
+	void MyElementFactory::RegisterFactoryFunction(
+ 	  std::string name, std::function<Element*(void)> classFactoryFunction) {
+	  // register the class factory function
+  	  factoryFunctionRegistry[name] = classFactoryFunction;
+	}
+	std::shared_ptr<Element> MyElementFactory::Create(std::string name) {
+	  Element* instance = nullptr;
+	  // find name in the registry and call factory method.
+	  auto it = factoryFunctionRegistry.find(name);
+	  if (it != factoryFunctionRegistry.end()) instance = it->second();
+	  // wrap instance in a shared ptr and return
+	  if (instance != nullptr)
+	    return std::shared_ptr<Element>(instance);
+	  else
+	    return nullptr;
+	}
+    </code></pre>  
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>FEM / MPM Current development</h2>
+  </hgroup>
+  <article id="MRT" class="smaller">
+    <div style="float: left; width: 45%;">
+      <ul>
+        <li>FE Base library</li>
+	<ul>
+          <li>Mesh class</li>
+          <li>Solver class</li>
+          <li>Assembler class</li>
+          <li>MPI parallelisation</li>
+	  <li>PETSc matrix algebra / solver</li>
+        </ul>
+	<li>FE THM coupling</li>
+	<li>HDF5 support</li>
+        <li>SQLite db</li>
+	<li>GMSH meshing</li>
+	<li>JSON input</li>
+	<li>Two-phase and Two-point formulation</li>
+      </ul>
+    </div>
+    <div style="float: right; width: 55%;">
+      <img src="images/thm.png" width ="80%">
+    </div>
+</article>
+</slide>
+<!-- ************************* Slide ************************************-->
 <slide hidden>
     Hidden slides are left out of the presentation.
 </slide>
 
 
-<slide hidden class="thank-you-slide">
-	<aside class="gdbar right"><img src="images/theme/Engineering.png"></aside>
-    <article class="flexbox vleft auto-fadein">
-      <h2>Thank You!!! </h2>
-    </article>
-    <p class="auto-fadein" data-config-contact>
-      <!-- populated from slide_config.json -->
-    </p>
+<!-- ************************* Slide ************************************-->
+<slide class="thank-you-slide segue nobackground">
+  <aside class="gdbar right"><img src="images/theme/Engineering.png"></aside>
+  <article class="flexbox vleft auto-fadein">
+
+    <h2>Thank You!</h2>
+    <br />
+    <h3>http://www.cb-geo.com</h3>
+  </article>
+
+  <p class="auto-fadein" data-config-contact>
+    <!-- populated from slide_config.json -->
+  </p>
+  <!-- Very special thanks to Chitra -->
 </slide>
 
 
