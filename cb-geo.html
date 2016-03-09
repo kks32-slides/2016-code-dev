@@ -494,7 +494,7 @@
         </ul>
 	<li>FE THM coupling</li>
 	<li>HDF5 support</li>
-        <li>SQLite db</li>
+        <li>NoSQL db to store / retireve results</li>
 	<li>GMSH meshing</li>
 	<li>JSON input</li>
 	<li>Two-phase and Two-point formulation</li>
@@ -505,6 +505,145 @@
     </div>
 </article>
 </slide>
+
+
+<!-- ************************* Slide ************************************-->
+<slide>
+	<hgroup>
+		<h2>Lattice Element Method</h2>
+	</hgroup>
+	<article class="smaller">
+	<div class="left" style="width:47%;">
+	  <figure>
+	  <img src="images/lem.png" style="width:80%">
+	  </figure>
+	</div>	
+	<div class="right" style="width:50%;">
+	  <figure>
+	  <img src="images/voro.png" width="100%">
+	  </figure>
+	</div>
+	</article>
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+	<hgroup>
+		<h2>Lattice Element Method - Fluid coupling</h2>
+	</hgroup>
+	<article class="smaller">
+	<div class="left" style="width:47%;">
+	  <figure>
+	  <img src="images/pipe-network.png" style="width:80%">
+	  </figure>
+	</div>	
+	<div class="right" style="width:50%;">
+	  <ul>
+	    <li>First assume injection pressure $P_{in}$ and injection rate $Q_{in}$ at injection point</li>
+      <li>Solve fluid pressure at each fluid node</li>
+      <li>Convert pressure to node force and solve LEM to update fracture aperture</li>
+      <li>Repeat the above process until convergence</li>
+	  </ul>
+		<div class="block" style="clear: both; width: 85%"> <!--border: solid thick grey; border-radius: 1em"-->
+	   $$q = - \frac{h^3}{12\mu}\frac{dp}{dx}$$
+  	</div>
+  </div>
+	</article>
+</slide>
+
+
+<!-- ************************* Slide ************************************-->
+<slide>
+	<hgroup>
+		<h2>Lattice Element Method - Algorithm</h2>
+	</hgroup>
+	<article class="smaller" style="text-align:center">
+	  <figure>
+	    <img src="images/lem-algorithm.png" style="width:60%">
+	  </figure>
+	</article>
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+	<hgroup>
+		<h2>Lattice Element Method</h2>
+	</hgroup>
+	<article class="smaller">
+	  <div class="left" style="width:47%;">
+      <video  width="100%" controls loop>
+        <source src="videos/150000_fracture.webm" type="video/webm">
+      	Your browser does not support the video tag.
+      </video>
+	  <br/>
+	  Dry fracture
+	  </div>	
+	  <div class="right" style="width:50%;">
+      <video  width="100%" controls loop>
+        <source src="videos/lem.webm" type="video/webm">
+  	    Your browser does not support the video tag.
+      </video>
+	    <br/>
+	    Hydraulic fracturing
+	  </div>
+	</article>
+</slide>
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>LEM implementation</h2>
+  </hgroup>
+  <article id="lem" class="smaller">
+    <div style="float: left; width: 45%;">
+      <ul>
+        <li>GMSH mesh generation</li>
+        <li>Generic templatised C++11/14</li>
+        <li>MPI Parallelisation for large problems</li>
+        <li>PETSc for multi-node solver</li>
+        <li>MAGMA/cuBLAS for GPU solver</li>
+	<li>LEM: </li>	
+	<ul>
+          <li>Linear spring elements</li>
+          <li>Shear spring</li>
+          <li>Simple fluid model</li>
+          <li>Leak-off</li>
+	</ul>
+	<li>DB resume support</li>
+	<li>Visulisation using VTK</li>
+     </ul>
+   </div>
+ </article>
+</slide>
+
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>LEM future developments</h2>
+  </hgroup>
+  <article id="lem" class="smaller">
+    <div style="float: left; width: 45%;">
+      <ul>
+        <li>Modelling initial ground condition</li>
+	<ul>
+          <li>Model major faults</li>
+          <li>Stratum from geological interpretation</li>
+	  <li>Advanced lattice models</li>
+        </ul>
+	<li>Fluid model: </li>	
+	<ul>
+          <li>Advanced fluid models</li>
+          <li>multi-stage and multi-well simulation</li>
+	</ul>
+        <li>Re-meshing / upscaling techniquee for multi-scale modelling</li>
+        <li>Multi-node multi-GPU parallelisation for large problems</li>
+	<li>Improved solution algorithm (iterative)</li>
+     </ul>
+   </div>
+ </article>
+</slide>
+  
 <!-- ************************* Slide ************************************-->
 <slide hidden>
     Hidden slides are left out of the presentation.
