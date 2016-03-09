@@ -24,6 +24,10 @@
      src = "js/mathjax_reload.js">
   </script>
 
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
   <head>
     <title></title>
     <meta charset="utf-8">
@@ -58,11 +62,32 @@
 </slide>
 
 
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>CB-Geo Software</h2>
+  </hgroup>
+  <br/>  
+  <article id="LBM" class="smaller">
+    <ul>
+      <li> Lattice-Boltzmann + Discrete Element Method </li>
+      <li> Finite Element Method - Thermo-Hydro Mechanical Coupling</li>
+      <li> Material Point Method </li>
+      <li> Lattice Element Method </li>
+    </ul> 
+  
+    <figure>
+      <img src="images/cb-geo.png" width ="100%">
+      <figcaption><a href="http://www.cb-geo.com">View the CB-Geo website for 
+        more information and software tools</a></figcaption>
+    </figure>
+  </article>
+</slide>
 
 <!-- ************************* Slide ************************************-->
 <slide>
   <hgroup>
-    <h2>Granular Collapse in Fluid</h2>
+    <h2>LBM - DEM simulation of granular collapse in fluid</h2>
   </hgroup>
   <div class="video">
     <br />
@@ -78,19 +103,19 @@
 
 <!-- ************************* Slide ************************************-->
 <slide>
-	<hgroup>
-		<h2> Lattice Boltzmann - MRT </h2>
-	</hgroup>
-	<article id="LBM" class="smaller">
-	<div class="left" style = "width: 48%;">
-		<figure>
-		<img src="images/LBMFluid.png" width ="80%">
-		<figcaption style = "font-size: 80%; text-align: center; "> Real Fluid vs LBM Idealisation </figcaption>
-		</figure>
-	</div>
+  <hgroup>
+   <h2> Lattice Boltzmann - MRT </h2>
+  </hgroup>
+  <article id="LBM" class="smaller">
+    <div class="left" style = "width: 48%;">
+      <figure>
+	<img src="images/LBMFluid.png" width ="80%">
+	<figcaption style = "font-size: 80%; text-align: center; "> Real Fluid vs LBM Idealisation </figcaption>
+      </figure>
+    </div>
 
-	<div class="right" style = "width: 48%;">
-		<figure>
+    <div class="right" style = "width: 48%;">
+      <figure>
 		<img src="images/D2Q9.png" width = "80%">
 		<figcaption style = "font-size: 80%; text-align: center; "><br /> LBM D2Q9 Model </figcaption>
 		</figure>
@@ -130,7 +155,7 @@
 <!-- ************************* Slide ************************************-->
 <slide>
 	<hgroup>
-		<h2>LBM Validation</h2>
+		<h2>LBM laminar & turbulent flows</h2>
 	</hgroup>
 	<div class = "left" style="width:50%">
 		<figure>
@@ -164,7 +189,7 @@
 <!-- ************************* Slide ************************************-->
 <slide>
 	<hgroup>
-		<h2> LBM Fluid-Solid Coupling </h2>
+		<h2> LBM fluid-solid coupling </h2>
 	</hgroup>
 	<article id="MRT" class="smaller">
     <div class="left" style = "width: 70%">
@@ -193,6 +218,44 @@
   <script defer> reprocessMathJax(document.getElementById('MRT'));</script>
 </slide>
 
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>LBM-DEM GPU implementation</h2>
+  </hgroup>
+  <br/>  
+  <article class="smaller" style="text-align:center;">
+    <figure>
+      <img src="images/GPU_Concept.png" width ="70%">
+    </figure>
+  </article>
+</slide>
+
+
+<!-- ************************* Slide ************************************-->
+<slide>
+  <hgroup>
+    <h2>LBM-DEM GPU implementation</h2>
+  </hgroup>
+  <br/>  
+    <pre>
+    <code class="cpp">
+      // Assign to each OpenMP a different GPU
+      int n_gpus = acc_get_num_devices( acc_device_nvidia );
+      if( n_gpus )
+        acc_set_device_num( tid % n_gpus, acc_device_nvidia );
+      else 
+        acc_set_device_type( acc_device_host );
+
+      #pragma acc parallel copyout(                   \
+        fhf1[0 : nbgrains],                           \
+          fhf2[0 : nbgrains], fhf3[0 : nbgrains])     \
+              copyin(obst[0 :][0 :], g[0 : nbgrains], \
+                                      ey[0 :], f[0 :][0 :][0 :], ex[0 :])
+                                      ey[0 :], f[0: ][y_start : y_end][0 :], ex[0 :])
+    </code></pre>  
+</slide>
+
 
 <!-- ************************* Slide ************************************-->
 <slide>
@@ -206,16 +269,20 @@
         Your browser does not support the video tag.
     </video>
     <br/>
-    <br/>Collapse of an 'a' = 6 column on a slope of 5 degrees <br />
+    <ul>
+      <li> LBM Nodes = 9 Million
+      :   DEM grains = 5000 discs </li>
+      <li> Real-time = 5 seconds </li>
+      <li> Run-time = 12 hours </li>
+      <li> Speedup = 125x on a GE-Force GTX 580</li>
   </div>
-
 </slide>
 
 
 <!-- ************************* Slide ************************************-->
 <slide>
       <hgroup>
-      <h2> Particle Generation: Cummulative $\beta$ distribution </h2>
+      <h2> Particle generation: cummulative $\beta$ distribution </h2>
       </hgroup>
 	<article class="smaller">
 	<div class="left" style="width:55%;">
@@ -258,7 +325,7 @@
 <!-- ************************* Slide ************************************-->
 <slide>
 	<hgroup>
-		<h2>Voronoi Tesselation: Density</h2>
+		<h2>Voronoi Tesselation: Capturing macroscopic density</h2>
 	</hgroup>
 	<article class="smaller">
 	<div class="figure">
@@ -271,7 +338,7 @@
 	  <figure>
   	    <img src="images/density.png" width="95%"><br />
 	    <figcaption  style = "font-size: 80%; text-align: center;">
-	      Local Packing Density (Black: dense, White: loose)
+	      Local packing density (black: dense, white: loose)
 	    </figcaption>
 	  </figure>
 	</div>
